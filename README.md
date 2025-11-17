@@ -57,30 +57,32 @@ This dataset is included in sklearn.datasets, so no external download is require
 
 ### 4. How to Run the Project
 Step 1 — Clone the Repository\
-git clone https://github.com/jjoshyv/MLOps_Major_Assignment_G24AI2037.git\
-cd MLOps_Major_Assignment_G24AI2037\
+git clone https://github.com/jjoshyv/MLOps_Major_Assignment_G24AI2037.git
+
+
+cd MLOps_Major_Assignment_G24AI2037
 
 Step 2 — Create & Activate a Virtual Environment\
 python3 -m venv venv\
-source venv/bin/activate\
+source venv/bin/activate
 
 Step 3 — Install Dependencies\
-pip install -r requirements.txt\
+pip install -r requirements.txt
 
 Step 4 — Train the Model\
 This loads the dataset, trains an SVM classifier, and saves it into saved_models/.\
-python3 train.py\
+python3 train.py
 
 Step 5 — Test the Model\
-python3 test.py\
+python3 test.py
 
 Step 6 — Run the Flask API\
 Start the API server:\
-python3 app.py\
+python3 app.py
 
 ### 5. Docker Support
 To build the container:\
-docker build -t mlops-pipeline .\
+docker build -t mlops-pipeline .
 
 Run the container:\
 docker run -p 5000:5000 mlops-pipeline
