@@ -21,21 +21,29 @@ jobs:
 
       - name: Install system build deps (non-interactive)
         run: |
+          set -euo pipefail
           sudo DEBIAN_FRONTEND=noninteractive apt-get update
+
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
             build-essential \
             gcc g++ gfortran \
             pkg-config \
-            python3-distutils \
-            python3-dev \
             libopenblas-dev \
             liblapack-dev \
             libatlas-base-dev \
             libblas-dev \
             libffi-dev \
             libssl-dev \
-            ca-certificates \
-          && sudo rm -rf /var/lib/apt/lists/*
+            ca-certificates || true
+
+          if apt-cache show python3-distutils >/dev/null 2>&1; then
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y python3-distutils
+          else
+            sudo DEBIAN_FRONTEND=noninteractive apt-get install -y python3.12-distutils python3.12-dev
+          fi
+
+          sudo rm -rf /var/lib/apt/lists/*
+
 
       - name: Cache pip
         uses: actions/cache@v4
