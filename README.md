@@ -95,7 +95,8 @@ This project showcases a production-style MLOps workflow where:
 
 This satisfies all assignment requirements for ML workflow automation, containerization, and CI/CD integration.
 
-### To Clone the Repository\
+### To Clone the Repository
 git clone https://github.com/jjoshyv/MLOps_Major_Assignment_G24AI2037.git
+
 
 
