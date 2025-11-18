@@ -1,121 +1,99 @@
 ## Automated MLOps Pipeline
 
-This project implements an end-to-end MLOps workflow involving dataset loading, model training, evaluation, and API deployment.
-It follows the key principles of Reproducibility, Automation, Version Control, and Containerized Deployment.
+This project implements a fully automated end-to-end MLOps workflow for training, testing, and deploying a machine learning model using modern DevOps practices.
+The pipeline is built around the Olivetti Faces Dataset, with a focus on reproducibility, automation, and containerized deployment.
 
-The model used in this pipeline is a Support Vector Machine (SVM) trained on the Olivetti Faces dataset, a classic face-recognition dataset containing 400 grayscale facial images.
+## Key Features
 
-### 1. Project Overview
+### 1. End-to-End ML Workflow
 
-The goal of this assignment is to design and execute an automated MLOps pipeline that includes:
+Loads and preprocesses the Olivetti Faces dataset
 
-Data loading & preprocessing
+Trains an SVM classifier
 
-Model training and evaluation
+Evaluates accuracy using a validation/test script
 
-Saving trained models
+Saves the trained model as saved_models/savedmodel.pth
 
-Testing the model on unseen data
+### 2. Fully Automated CI Pipeline (GitHub Actions)
 
-Deploying the ML model using a Flask API
+Every push to docker_ci or PR to main triggers:
 
-Managing the pipeline using:
+Environment setup
 
-Virtual environments
+System dependency installation
 
-Git for version control
+Python package installation
 
-Docker for reproducible execution
+Automated model training
 
-This project demonstrates how Machine Learning workflows can be automated and packaged for deployment.
+Automated unit testing
 
-### 2. Project Structure
-MLOps_Major_Assignment/\
-│── app.py&nbsp;&nbsp;&nbsp;           # Flask API for model prediction\
-│── train.py&nbsp;&nbsp;&nbsp;           # Training script (model creation + saving)\
-│── test.py&nbsp;&nbsp;&nbsp;             # Script to test trained model accuracy\
-│── saved_models&nbsp;&nbsp;&nbsp;    # Folder generated after training\
-│── requirements.txt&nbsp;&nbsp;&nbsp;     # Python dependencies\
-│── venv/&nbsp;&nbsp;&nbsp;                # Virtual environment (ignored in Git)\
-└── README.md&nbsp;&nbsp;&nbsp;           # Project documentation\
+Docker image build
+
+Cleanup and summary logs
+
+This guarantees reproducibility, consistent builds, and reliable testing.
+
+### Dockerized Deployment
+
+The application includes:
+
+A Flask API for image upload and prediction
+
+Containerized execution using Docker
+
+Simple deploy/start instructions:
+
+docker build -t mlops-olivetti-app .\
+docker run -p 5000:5000 mlops-olivetti-app
 
 
-### 3. Dataset Used
-Olivetti Faces Dataset
+The app exposes a web interface where users can upload face images and receive class predictions.
 
-400 images
+### Repository Structure
 
-64×64 grayscale
+├── app.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                 # Flask API for face image prediction\
+├── train.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;               # Model training script\
+├── test.py&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;                # Unit testing script\
+├── saved_models/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;          # Stores trained model (savedmodel.pth)\
+├── Dockerfile&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;             # Containerization file\
+├── requirements.txt&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;       # Python dependencies\
+├── screenshots/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;          # UI images for documentation\
+└── .github/workflows/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;     # CI/CD pipeline configuration\
 
-40 individuals (10 images each)
 
-Loaded directly using:
+### MLOps Principles Implemented
 
-from sklearn.datasets import fetch_olivetti_faces
+Version control using Git & GitHub
 
-This dataset is included in sklearn.datasets, so no external download is required.
+Branching strategy:
 
-### 4. How to Run the Project
-Step 1 — Clone the Repository\
+&nbsp;&nbsp;&nbsp;main → stable release
+
+&nbsp;&nbsp;&nbsp;dev → model development
+
+&nbsp;&nbsp;&nbsp;docker_ci → CI/CD automation
+
+Continuous Integration with automatic test + build
+
+Containerization for consistent deployment
+
+Reproducibility ensured through pinned dependencies and CI-based training
+
+### Final Outcome
+
+This project showcases a production-style MLOps workflow where:
+
+&nbsp;&nbsp;&nbsp;Code commits trigger automatic training + testing
+
+&nbsp;&nbsp;&nbsp;A Docker image is built reproducibly
+
+&nbsp;&nbsp;&nbsp;The model is served through a simple but functional API
+
+&nbsp;&nbsp;&nbsp;The entire lifecycle is automated and repeatable
+
+This satisfies all assignment requirements for ML workflow automation, containerization, and CI/CD integration.
+
+### To Clone the Repository\
 git clone https://github.com/jjoshyv/MLOps_Major_Assignment_G24AI2037.git
-
-
-cd MLOps_Major_Assignment_G24AI2037
-
-Step 2 — Create & Activate a Virtual Environment\
-python3 -m venv venv\
-source venv/bin/activate
-
-Step 3 — Install Dependencies\
-pip install -r requirements.txt
-
-Step 4 — Train the Model\
-This loads the dataset, trains an SVM classifier, and saves it into saved_models/.\
-python3 train.py
-
-Step 5 — Test the Model\
-python3 test.py
-
-Step 6 — Run the Flask API\
-Start the API server:\
-python3 app.py
-
-### 5. Docker Support
-To build the container:\
-docker build -t mlops-pipeline .
-
-Run the container:\
-docker run -p 5000:5000 mlops-pipeline
-
-This ensures the ML pipeline is fully reproducible and portable.
-
-### 6. Requirements
-
-All dependencies are included in requirements.txt.\
-Key libraries:
-
-scikit-learn
-
-numpy
-
-flask
-
-pillow
-
-gunicorn (for production)
-
-### 7. Key Features
-
-Fully automated ML training + testing
-
-Reproducible through Docker
-
-Clean API for inference
-
-Model persistence for reuse
-
-Version-controlled workflow (GitHub)
-
-Virtual environment isolation
-
-Modular Python scripts
