@@ -57,8 +57,14 @@ jobs:
           # prefer binary wheels where available to avoid compiling
           python -m pip install --prefer-binary --no-cache-dir -r requirements.txt
 
+      - name: Train model
+        run: |
+          # run training (should save model to saved_models/savedmodel.pth)
+          python train.py
+
       - name: Run unit tests
-        run: python test.py
+        run: |
+          python test.py
 
       - name: Build Docker image
         run: docker build -t mlops-olivetti-app .
